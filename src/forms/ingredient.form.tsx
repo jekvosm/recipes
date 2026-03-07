@@ -1,27 +1,42 @@
 'use client'
 
+import { createIngredient } from '@/actions/ingredient'
 import { CATEGORY_OPTIONS, UNIT_OPTIONS } from '@/constants/select-options'
 import { Form } from '@heroui/form'
 import { Input } from '@heroui/input'
 import { Button, Select, SelectItem } from '@heroui/react'
 import { useState } from 'react'
 
-const IngredientForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    category: '',
-    unit: '',
-    pricePerUnit: null as number | null,
-    description: '',
-  })
+const initialState = {
+  name: '',
+  category: '',
+  unit: '',
+  pricePerUnit: null as number | null,
+  description: '',
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+const IngredientForm = () => {
+  const [error, setError] = useState<string | null>(null)
+  const [formData, setFormData] = useState(initialState)
+
+  const handleSubmit = async (formData: FormData) => {
     console.log('Form submitted', formData)
+
+    const result = await createIngredient(formData)
+
+    if (result.error) {
+      setError(result.error)
+    } else {
+      setError(null)
+
+      setFormData(initialState)
+    }
   }
 
   return (
-    <Form className='w-[400px]' onSubmit={handleSubmit}>
+    <Form className='w-[400px]' action={handleSubmit}>
+      {error && <p className='text-red-500 mb-4'>{error}</p>}
+
       <Input
         isRequired
         name='name'
