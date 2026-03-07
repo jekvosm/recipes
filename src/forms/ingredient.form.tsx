@@ -5,7 +5,7 @@ import { CATEGORY_OPTIONS, UNIT_OPTIONS } from '@/constants/select-options'
 import { Form } from '@heroui/form'
 import { Input } from '@heroui/input'
 import { Button, Select, SelectItem } from '@heroui/react'
-import { useState } from 'react'
+import { startTransition, useState, useTransition } from 'react'
 
 const initialState = {
   name: '',
@@ -19,18 +19,24 @@ const IngredientForm = () => {
   const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState(initialState)
 
+  const [isPending, startTransition] = useTransition()
+
   const handleSubmit = async (formData: FormData) => {
     console.log('Form submitted', formData)
 
-    const result = await createIngredient(formData)
+    startTransition(async () => {
+      const result = await createIngredient(formData)
 
-    if (result.error) {
-      setError(result.error)
-    } else {
-      setError(null)
+      if (result.error) {
+        setError(result.error)
+        alert('Ошибка при создании ингредиента')
+      } else {
+        setError(null)
+        setFormData(initialState)
 
-      setFormData(initialState)
-    }
+        alert('Успешное создание ингредиента')
+      }
+    })
   }
 
   return (
@@ -139,7 +145,7 @@ const IngredientForm = () => {
       />
 
       <div className='flex w-full items-center justify-end'>
-        <Button color='primary' type='submit'>
+        <Button color='primary' type='submit' isLoading={isPending}>
           Добавить ингредиент
         </Button>
       </div>
