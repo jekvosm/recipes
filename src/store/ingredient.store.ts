@@ -64,6 +64,7 @@ export const useIngredientStore = create<IngredientSore>(set => ({
           ingredients: state.ingredients.filter(
             ingredient => ingredient.id !== id,
           ),
+          isLoading: false,
         }))
       } else {
         set({ error: result.error, isLoading: false })
