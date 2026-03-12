@@ -3,10 +3,17 @@ import { getToken } from 'next-auth/jwt'
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const token = await getToken({ req: request, secret: process.env.AUTH_SECRET })
-  const protectedRoutes = ['/ingredients']
+  const token = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET,
+  })
+  const protectedRoutes = ['/ingredients', '/recipe/new', '/recipe/:path*']
 
-  if (protectedRoutes.some(route => pathname.startsWith(route))) {
+  if (
+    protectedRoutes.some(route =>
+      pathname.startsWith(route.replace('/path*', '')),
+    )
+  ) {
     if (!token) {
       const url = new URL('/error', request.url)
       url.searchParams.set('message', 'Недостаточно прав')
@@ -18,5 +25,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const congig = {
-  matcher: ['/ingredients'],
+  matcher: ['/ingredients', '/recipe/new', '/recipe/:path*'],
 }
