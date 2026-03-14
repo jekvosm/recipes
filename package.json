@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "prisma:push": "prisma db push",
-    "prisma:studio": "prisma studio --port 7777"
+    "prisma:studio": "prisma studio --port 7777",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
