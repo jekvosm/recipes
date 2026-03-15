@@ -5,12 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "postinstall": "prisma generate",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "prisma:push": "prisma db push",
-    "prisma:studio": "prisma studio --port 7777",
-    "postinstall": "prisma generate"
+    "prisma:studio": "prisma studio --port 7777"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
