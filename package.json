@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "eslint",
     "prisma:push": "prisma db push",
+    "prisma:pull": "prisma db pull",
     "prisma:studio": "prisma studio --port 7777"
   },
   "dependencies": {
@@ -22,7 +23,7 @@
     "@heroui/system": "^2.4.23",
     "@heroui/theme": "^2.4.23",
     "@prisma/adapter-pg": "^7.1.0",
-    "@prisma/client": "^7.0.1",
+    "@prisma/client": "^7.5.0",
     "@prisma/extension-accelerate": "^3.0.1",
     "bcryptjs": "^3.0.3",
     "dompurify": "^3.3.1",
@@ -32,6 +33,7 @@
     "isomorphic-dompurify": "^3.0.0",
     "next": "16.0.10",
     "next-auth": "^5.0.0-beta.30",
+    "prisma": "^7.5.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "zod": "^4.1.13",
@@ -45,7 +47,6 @@
     "baseline-browser-mapping": "^2.10.8",
     "eslint": "^9",
     "eslint-config-next": "16.0.5",
-    "prisma": "^7.0.1",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
