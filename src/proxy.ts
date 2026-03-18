@@ -4,16 +4,21 @@ import { getToken, GetTokenParams } from 'next-auth/jwt'
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  let params: GetTokenParams = {
+  // let params: GetTokenParams = {
+  //   req: request,
+  //   secret: process.env.AUTH_SECRET ?? 'secret',
+  // }
+
+  // if (process.env.NODE_ENV === 'production') {
+  //   params = { ...params, cookieName: '__Secure-authjs.session-token' }
+  // }
+
+  const token = await getToken({
     req: request,
-    secret: process.env.AUTH_SECRET ?? 'secret',
-  }
+    secret: process.env.AUTH_SECRET,
+  })
 
-  if (process.env.NODE_ENV === 'production') {
-    params = { ...params, cookieName: '__Secure-authjs.session-token' }
-  }
-
-  const token = await getToken(params)
+  // const token = await getToken(params)
 
   const protectedRoutes = ['/ingredients', '/recipe/new', '/recipe/:path*']
 

@@ -4,6 +4,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 
 // const pool = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 // const prisma = new PrismaClient({ adapter: pool })
+
 const prismaClientSingleton = () => {
   return new PrismaClient({
     accelerateUrl: process.env.DATABASE_URL as string,
